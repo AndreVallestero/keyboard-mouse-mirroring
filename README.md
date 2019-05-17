@@ -1,2 +1,2 @@
 # keyboard-mouse-mirroring
-Keyboard and mouse events from a host system is mirrored on connected clients
+Keyboard and mouse events from a server is mirrored on connected clients
