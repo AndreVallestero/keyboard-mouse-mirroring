@@ -48,7 +48,6 @@ while True:
         # Format data
         byteData = str(mouseData + keyboardData).encode("utf8")
         # Send data
-        client.send(byteData)
     
         
 

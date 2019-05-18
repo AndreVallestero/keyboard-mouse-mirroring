@@ -1,4 +1,8 @@
 # python 3.6
+# Key scan code reference: https://i.imgur.com/5lnCiNp.png
+# Key scan code uses ibm 101-key keyboard
+# VK code reference: https://docs.microsoft.com/en-us/windows/desktop/inputdev/virtual-key-codes
+
 
 import socket
 import win32api
@@ -18,13 +22,13 @@ pollKeys = [0x01, # VK_LBUTTON
             0x75] # VK_F6
 
 targetKeys = [0x01, # VK_LBUTTON
-            0x11, # VK_CONTROL
-            0x51, # Q
-            0x57, # W
-            0x45, # E
-            0x52, # R
-            0x44, # D
-            0x46] # F
+            (0x11, 58), # VK_CONTROL
+            (0x51, 17), # Q
+            (0x57, 18), # W
+            (0x45, 19), # E
+            (0x52, 20), # R
+            (0x44, 33), # D
+            (0x46, 34)] # F
 
 oldKeyStates = [0] * len(pollKeys)
 
@@ -58,6 +62,6 @@ while True:
         elif pollKeys[i] == 0x02: # Right mouse button offset 8    
             win32api.mouse_event(8 + action, posX, posY, 0, 0)
         else:
-            ctypes.windll.user32.keybd_event(targetKeys[i], 0, action, 0)
+            ctypes.windll.user32.keybd_event(targetKeys[i][0], targetKeys[i][1], action, 0)
     oldKeyStates = keyStates
             
