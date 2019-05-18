@@ -38,7 +38,7 @@ s.connect((serverIp, port))
 print("KMM successfully connected to server")
 
 while True:
-    data = str(s.recv(64).decode("utf8")).split(",")
+    data = str(s.recv(256).decode("utf8")).split(",")
 
     # Move mouse
     # Uncomment lines below for different server/client resolutions
