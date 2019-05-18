@@ -32,15 +32,15 @@ s.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
 s.connect((serverIp, port))
 
 while True:
-    data = str(s.recv(32).decode("utf8")).split(",")
+    data = str(s.recv(1024).decode("utf8")).split(",")
 
     # Move mouse
-    posX = int(data[0]
+    posX = int(data[0])
     posY = int(data[1])
     win32api.SetCursorPos((posX, posY))
 
     # Press keys
-    keyStates = [int(keyState) for keyState in data[2]]
+    keyStates = [int(keyState) for keyState in data[2][0:len(pollKeys)]]
     for i in range(len(keyStates)):
         # if action = 0, press key down, if action = 2, release key
         action = 1 + oldKeyStates[i] - keyStates[i]
