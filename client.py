@@ -1,6 +1,5 @@
 # python 3.6
-# Key scan code reference: https://i.imgur.com/5lnCiNp.png
-# Key scan code uses ibm 101-key keyboard
+# Key scan code reference: https://msdn.microsoft.com/en-us/ie/aa299374(v=vs.100)
 # VK code reference: https://docs.microsoft.com/en-us/windows/desktop/inputdev/virtual-key-codes
 
 import socket
@@ -17,16 +16,18 @@ pollKeys = [0x01, # VK_LBUTTON
             0x72, # VK_F3
             0x73, # VK_F4
             0x74, # VK_F5
-            0x75] # VK_F6
+            0x75, # VK_F6
+            0x76] # VK_F7
 
 targetKeys = [0x01, # VK_LBUTTON
-            (0x11, 58), # VK_CONTROL
+            (0x11, 29), # VK_CONTROL
             (0x51, 16), # Q
             (0x57, 17), # W
             (0x45, 18), # E
             (0x52, 19), # R
             (0x44, 32), # D
-            (0x46, 33)] # F
+            (0x46, 33), # F
+            (0x31, 2)]  # 1
 
 oldKeyStates = [0] * len(pollKeys)
 
@@ -37,7 +38,7 @@ s.connect((serverIp, port))
 print("KMM successfully connected to server")
 
 while True:
-    data = str(s.recv(1024).decode("utf8")).split(",")
+    data = str(s.recv(64).decode("utf8")).split(",")
 
     # Move mouse
     # Uncomment lines below for different server/client resolutions

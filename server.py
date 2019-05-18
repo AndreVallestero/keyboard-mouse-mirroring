@@ -14,7 +14,8 @@ pollKeys = [0x01, # VK_LBUTTON
             0x72, # VK_F3
             0x73, # VK_F4
             0x74, # VK_F5
-            0x75] # VK_F6
+            0x75, # VK_F6
+            0x76] # VK_F7
 
 pollInterval = 1 / pollRate
 pollTime = 0
