@@ -6,6 +6,7 @@ import win32api
 # Config variables
 port = 46331
 serverIp = "127.0.0.1"
+
 pollKeys = [0x01, # VK_LBUTTON
             0x11, # VK_CONTROL
             0x70, # VK_F1
@@ -35,8 +36,9 @@ while True:
     data = str(s.recv(1024).decode("utf8")).split(",")
 
     # Move mouse
-    posX = int(data[0])
-    posY = int(data[1])
+    # Uncomment lines below for different server/client resolutions
+    posX = int(data[0]) # // (1920 / 1366)
+    posY = int(data[1]) # // (1080 / 768)
     win32api.SetCursorPos((posX, posY))
 
     # Press keys
