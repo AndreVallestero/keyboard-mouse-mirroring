@@ -36,6 +36,7 @@ oldKeyStates = [0] * len(pollKeys)
 s = socket.socket()
 s.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
 s.connect((serverIp, port))
+print("KMM successfully connected to server")
 
 while True:
     data = str(s.recv(1024).decode("utf8")).split(",")
@@ -43,8 +44,10 @@ while True:
     # Move mouse
     # Uncomment lines below for different server/client resolutions
     try:
-        posX = int(data[0]) # // (1920 / 1366)
-        posY = int(data[1]) # // (1080 / 768)
+        posX = int(data[0]) #* (1366 / 1920)
+        posY = int(data[1]) #* (768 / 1080)
+        #posX = int(posX)
+        #posY = int(posY)
         win32api.SetCursorPos((posX, posY))
     except:
         pass
