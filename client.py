@@ -2,6 +2,7 @@
 
 import socket
 import win32api
+import ctypes
 
 # Config variables
 port = 46331
@@ -37,9 +38,12 @@ while True:
 
     # Move mouse
     # Uncomment lines below for different server/client resolutions
-    posX = int(data[0]) # // (1920 / 1366)
-    posY = int(data[1]) # // (1080 / 768)
-    win32api.SetCursorPos((posX, posY))
+    try:
+        posX = int(data[0]) # // (1920 / 1366)
+        posY = int(data[1]) # // (1080 / 768)
+        win32api.SetCursorPos((posX, posY))
+    except:
+        pass
 
     # Press keys
     keyStates = [int(keyState) for keyState in data[2][0:len(pollKeys)]]
@@ -54,6 +58,6 @@ while True:
         elif pollKeys[i] == 0x02: # Right mouse button offset 8    
             win32api.mouse_event(8 + action, posX, posY, 0, 0)
         else:
-            win32api.keybd_event(targetKeys[i], 0, action, 0)
+            ctypes.windll.user32.keybd_event(targetKeys[i], 0, action, 0)
     oldKeyStates = keyStates
             
