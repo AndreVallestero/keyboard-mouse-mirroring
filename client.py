@@ -56,7 +56,7 @@ while True:
 
     # Validate data
     if len(data[2]) < numKeys: continue
-    keyStates = [int(keyState) for keyState in data[2][0:numKeys)]]
+    keyStates = [int(keyState) for keyState in data[2][0:numKeys]]
 
     # Press keys
     for i in range(len(keyStates)):
