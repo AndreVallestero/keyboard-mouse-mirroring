@@ -52,9 +52,9 @@ while True:
         #posY = int(posY)
         win32api.SetCursorPos((posX, posY))
     except:
-        pass
+        continue
 
-    # Validate data
+    # Validate key data
     if len(data[2]) < numKeys: continue
     keyStates = [int(keyState) for keyState in data[2][0:numKeys]]
 
