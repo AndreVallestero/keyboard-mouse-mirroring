@@ -43,33 +43,29 @@ print("KMM successfully connected to server")
 while True:
     data = str(s.recv(256).decode("utf8")).split(",")
 
-    # Move mouse
-    # Uncomment lines below for different server/client resolutions
     try:
+        # Move mouse
+        # Uncomment lines below for different server/client resolutions
         posX = int(data[0]) #* (1366 / 1920)
         posY = int(data[1]) #* (768 / 1080)
         #posX = int(posX)
         #posY = int(posY)
         win32api.SetCursorPos((posX, posY))
+
+        # Press keys
+        keyStates = [int(keyState) for keyState in data[2][0:numKeys]]
+        for i in range(len(keyStates)):
+            # if action = 0, press key down, if action = 2, release key
+            action = 1 + oldKeyStates[i] - keyStates[i]
+            if action == 1: continue
+
+            # Mouse specific handling
+            if pollKeys[i] == 0x01: # Left mouse button offset 2
+                win32api.mouse_event(2 + action, posX, posY, 0, 0)
+            elif pollKeys[i] == 0x02: # Right mouse button offset 8    
+                win32api.mouse_event(8 + action, posX, posY, 0, 0)
+            else:
+                win32api.keybd_event(targetKeys[i][0], targetKeys[i][1], action, 0)
+        oldKeyStates = keyStates
     except:
         continue
-
-    # Validate key data
-    if len(data[2]) < numKeys: continue
-    keyStates = [int(keyState) for keyState in data[2][0:numKeys]]
-
-    # Press keys
-    for i in range(len(keyStates)):
-        # if action = 0, press key down, if action = 2, release key
-        action = 1 + oldKeyStates[i] - keyStates[i]
-        if action == 1: continue
-
-        # Mouse specific handling
-        if pollKeys[i] == 0x01: # Left mouse button offset 2
-            win32api.mouse_event(2 + action, posX, posY, 0, 0)
-        elif pollKeys[i] == 0x02: # Right mouse button offset 8    
-            win32api.mouse_event(8 + action, posX, posY, 0, 0)
-        else:
-            win32api.keybd_event(targetKeys[i][0], targetKeys[i][1], action, 0)
-    oldKeyStates = keyStates
-            
