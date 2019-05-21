@@ -29,7 +29,10 @@ targetKeys = [0x01, # VK_LBUTTON
             (0x46, 33), # F
             (0x31, 2)]  # 1
 
-oldKeyStates = [0] * len(pollKeys)
+
+numKeys = len(pollKeys)
+
+oldKeyStates = [0] * numKeys
 
 # Create socket and connect to server
 s = socket.socket()
@@ -51,8 +54,11 @@ while True:
     except:
         pass
 
+    # Validate data
+    if len(data[2]) < numKeys: continue
+    keyStates = [int(keyState) for keyState in data[2][0:numKeys)]]
+
     # Press keys
-    keyStates = [int(keyState) for keyState in data[2][0:len(pollKeys)]]
     for i in range(len(keyStates)):
         # if action = 0, press key down, if action = 2, release key
         action = 1 + oldKeyStates[i] - keyStates[i]
